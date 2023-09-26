@@ -66,7 +66,7 @@ class Disk(
     }
 
     fun readInput(keyboard: Scanner?) {
-        //IMPLEMENTAR
+
     }
 
     fun writeFile(stream: RandomAccessFile?) {

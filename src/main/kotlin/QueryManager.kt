@@ -19,7 +19,7 @@ class QueryManager {
                 createDefaultDisks()
             }
         } catch (e: FileNotFoundException) {
-            System.out.println("Error al abrir el fichero: $fileName")
+            println("Error al abrir el fichero: $fileName")
             System.exit(0)
         }
 
