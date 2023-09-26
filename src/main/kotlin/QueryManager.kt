@@ -4,7 +4,7 @@ import java.io.IOException
 import java.io.RandomAccessFile
 
 
-class GestorConsultas {
+class QueryManager {
     lateinit var stream: RandomAccessFile;
 
     init {
@@ -27,19 +27,19 @@ class GestorConsultas {
 
     }
     fun createDefaultDisks() {
-        var disco1 =  Disco(1, "Que voy a hacer", "Los Planetas", 20.0, 5);
-        disco1.escribeEnFichero(stream);
-        var disco2 = Disco(2, "La voz del presidente", "Viva Suecia", 35.0, 1);
-        disco2.escribeEnFichero(stream);
-        var disco3 = Disco(3, "La revolución sexual", "La casa azul", 20.0, 10);
-        disco3.escribeEnFichero(stream);
-        var disco4 = Disco(4, "Finisterre", "Vetusta Morla", 40.0, 5);
-        disco4.escribeEnFichero(stream);
-        var disco5 = Disco(5, "Paradise","Coldplay", 35.0, 2);
-        disco5.escribeEnFichero(stream);
+        var disk1 =  Disk(1, "Que voy a hacer", "Los Planetas", 20.0, 5);
+        disk1.writeFile(stream);
+        var disk2 = Disk(2, "La voz del presidente", "Viva Suecia", 35.0, 1);
+        disk2.writeFile(stream);
+        var disk3 = Disk(3, "La revolución sexual", "La casa azul", 20.0, 10);
+        disk3.writeFile(stream);
+        var disk4 = Disk(4, "Finisterre", "Vetusta Morla", 40.0, 5);
+        disk4.writeFile(stream);
+        var disk5 = Disk(5, "Paradise","Coldplay", 35.0, 2);
+        disk5.writeFile(stream);
     }
 
-    fun cierraGestor() {
+    fun closeFile() {
         try {
             stream.close()
         } catch (e: IOException) {
@@ -48,7 +48,7 @@ class GestorConsultas {
     }
 
     private fun findByCode(code: Int): Long {
-        val disc = Disco()
+        val disk = Disk()
         //IMPLEMENTAR
         return 0;
     }
@@ -63,21 +63,21 @@ class GestorConsultas {
     }
 
     fun getArrayOfAuthors(): Array<String> {
-        val Disco = Disco()
+        val Disco = Disk()
         //IMPLEMENTAR
         return arrayOf();
     }
 
 
     private fun hashArray(autores: HashSet<String>): Array<String?> {
-        val lista = arrayOfNulls<String>(autores.size)
+        val list = arrayOfNulls<String>(autores.size)
         var i = 0
-        for (`val` in autores) lista[i++] = `val`
-        return lista
+        for (`val` in autores) list[i++] = `val`
+        return list
     }
 
     fun findByAuthor(author: String?): Array<String> {
-        val Disco = Disco()
+        val disk = Disk()
         //IMPLEMENTAR
         return arrayOf()
     }
