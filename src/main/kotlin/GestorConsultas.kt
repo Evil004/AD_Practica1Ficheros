@@ -3,89 +3,71 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.RandomAccessFile
 
-class GestorConsultas {
-    var stream: RandomAccessFile? = null
 
-    /**
-     * Constructor del gestor de consultas de la tienda.
-     * Abre el fichero con los datos de prueba.
-     * Si no existe, lo crea
-     */
+class GestorConsultas {
+    lateinit var stream: RandomAccessFile;
+
     init {
-        creaFichero("discosDAML.dat")
+        createFile("discosDAML.dat")
     }
 
-    /**
-     * Crea / abre el fichero en disco
-     * @param nombreFichero nombre del fichero en disco
-     */
-    private fun creaFichero(nombreFichero: String) {
+    fun createFile(fileName:String){
         try {
-            val exists = File(nombreFichero).exists()
-            stream = RandomAccessFile(nombreFichero, "rw")
+            val exists = File(fileName).exists()
+            stream = RandomAccessFile(fileName, "rw")
             if (!exists) {
-                creaDiscosPorDefecto()
+                createDefaultDisks()
             }
         } catch (e: FileNotFoundException) {
-            println("Error al abrir el fichero: $nombreFichero")
+            System.out.println("Error al abrir el fichero: $fileName")
             System.exit(0)
         }
+
+
+
+    }
+    fun createDefaultDisks() {
+        var disco1 =  Disco(1, "Que voy a hacer", "Los Planetas", 20.0, 5);
+        disco1.escribeEnFichero(stream);
+        var disco2 = Disco(2, "La voz del presidente", "Viva Suecia", 35.0, 1);
+        disco2.escribeEnFichero(stream);
+        var disco3 = Disco(3, "La revolución sexual", "La casa azul", 20.0, 10);
+        disco3.escribeEnFichero(stream);
+        var disco4 = Disco(4, "Finisterre", "Vetusta Morla", 40.0, 5);
+        disco4.escribeEnFichero(stream);
+        var disco5 = Disco(5, "Paradise","Coldplay", 35.0, 2);
+        disco5.escribeEnFichero(stream);
     }
 
-    private fun creaDiscosPorDefecto() {
-        val disco1 = Disco(1, "Que voy a hacer", "Los Planetas", 20.0, 5)
-        disco1.escribeEnFichero(stream)
-        val disco2 = Disco(2, "La voz del presidente", "Viva Suecia", 35.0, 1)
-        disco2.escribeEnFichero(stream)
-        val disco3 = Disco(3, "La revolución sexual", "La casa azul", 20.0, 10)
-        disco3.escribeEnFichero(stream)
-        val disco4 = Disco(4, "Finisterre", "Vetusta Morla", 40.0, 5)
-        disco4.escribeEnFichero(stream)
-        val disco5 = Disco(5, "Paradise", "Coldplay", 35.0, 2)
-        disco5.escribeEnFichero(stream)
-    }
-
-    /**
-     * Cierra el flujo/stream asociado al fichero de discos.
-     */
     fun cierraGestor() {
         try {
-            stream!!.close()
+            stream.close()
         } catch (e: IOException) {
             println("No se ha podido cerrar el fichero")
         }
     }
 
-    /**
-     * Metodo auxiliar privado que busca un disco con un codigo dado y devuelve su posicion en el fichero
-     * Si no lo encuentra, devuelve -1
-     * @param    codigoBuscado    codigo del disco buscado
-     * @return                    byte de inicio del registro en el fichero
-     */
-    private fun buscaCodigo(codigoBuscado: Int): Long {
-        val Disco = Disco()
+    private fun findByCode(code: Int): Long {
+        val disc = Disco()
         //IMPLEMENTAR
-        return 0
+        return 0;
     }
 
-    private fun posicionaFichero(posicion: Long) {
+    private fun seekOnFile(posicion: Long) {
         try {
-            stream!!.seek(posicion)
+            stream.seek(posicion)
         } catch (e: IOException) {
             println("Error posicionando el puntero al inicio del fichero")
             System.exit(0)
         }
     }
 
-    /**
-     * Devuelve un vector con los autores de discos en el catalog de la tienda
-     * @return    Vector de cadenas con los autores
-     */
-    fun listaAutores(): Array<String>? {
+    fun getArrayOfAuthors(): Array<String> {
         val Disco = Disco()
         //IMPLEMENTAR
-        return null
+        return arrayOf();
     }
+
 
     private fun hashArray(autores: HashSet<String>): Array<String?> {
         val lista = arrayOfNulls<String>(autores.size)
@@ -94,38 +76,22 @@ class GestorConsultas {
         return lista
     }
 
-    /**
-     * Busca los discos de un determinado autor en el fichero y los devuelve como un vector de cadenas
-     * Si no hay ninguno, devuelve el vector vacio
-     * @param    autorBuscado    autor del disco buscado
-     * @return                    Vector de cadenas asociadas a los discos del autor
-     */
-    fun buscaAutor(autorBuscado: String?): Array<String>? {
+    fun findByAuthor(author: String?): Array<String> {
         val Disco = Disco()
         //IMPLEMENTAR
-        return null
+        return arrayOf()
     }
 
-    /**
-     * Da de alta un ejemplar del disco con un codigo dado y devuelve una cadena con sus datos
-     * Si el disco no estaba en el fichero, devuelve la cadena vacía
-     * @param    codigoBuscado    codigo del disco buscado
-     * @return                    cadena con informacion del disco
-     */
-    fun altaDisco(codigoBuscado: Int): String {
-        val posicion = buscaCodigo(codigoBuscado)
+    fun increaseStockToDisk(code: Int): String {
+        val position: Long = findByCode(code)
         //IMPLEMENTAR
         return ""
     }
 
-    /**
-     * Da de baja un ejemplar del disco con un codigo dado y devuelve una cadena con sus datos
-     * Si no hay ninguno, devuelve una cadena vacía
-     * @return            cadena con informacion del disco
-     */
-    fun bajaDisco(codigoBuscado: Int): String {
-        val posicion = buscaCodigo(codigoBuscado)
+    fun decreaseStockToDisk(disk: Int): String {
+        val position: Long = findByCode(disk)
         //IMPLEMENTAR
         return ""
     }
+
 }
