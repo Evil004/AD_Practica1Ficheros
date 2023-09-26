@@ -69,12 +69,24 @@ class Disk(
         //IMPLEMENTAR
     }
 
-    fun writeFile(stream: RandomAccessFile?) {
-        //IMPLEMENTAR
+    fun writeFile(stream: RandomAccessFile) {
+        stream.writeInt(code)
+        stream.writeUTF(title)
+        stream.writeUTF(author)
+        stream.writeDouble(price)
+        stream.writeInt(stock)
     }
 
     @Throws(EOFException::class, IOException::class)
-    fun readFile(stream: RandomAccessFile?) {
-        //IMPLEMENTAR
+    fun readFile(stream: RandomAccessFile) {
+        stream.seek(0)
+        val code = stream.readInt()
+        val title = stream.readUTF()
+        val author = stream.readUTF()
+        val price = stream.readDouble()
+        val stock = stream.readInt()
+
+        val disk = Disk(code, title, author, price, stock)
+
     }
 }
